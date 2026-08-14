@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flashlight</title>
+<style>
+body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
+button{width:200px;height:200px;border-radius:50%;font-size:26px;border:0;background:white}
+.on{background:yellow;box-shadow:0 0 80px yellow}
+</style>
+</head>
+<body>
+<button id="b">TAP TO ON</button>
+<script>
+let t=null, o=false;
+b.onclick=async()=>{
+if(!t){let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});t=s.getVideoTracks()[0];}
+o=!o;await t.applyConstraints({advanced:[{torch:o}]});b.textContent=o?"TAP TO OFF":"TAP TO ON";b.className=o?"on":"";
+}
+</script>
+</body>
+</html>
