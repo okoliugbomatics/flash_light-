@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="manifest" href="manifest.json">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flashlight</title>
+<title>Flash Light</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.png">
 <style>
-body{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;background:#000}
-button{width:200px;height:200px;border-radius:50%;font-size:26px;border:0;background:white}
-.on{background:yellow;box-shadow:0 0 80px yellow}
+body{margin:0;height:100vh;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:sans-serif;color:white}
+#icon{width:120px;height:120px;border-radius:30px;margin-bottom:20px}
+#b{width:220px;height:220px;border-radius:50%;border:0;font-size:28px;font-weight:bold;background:white;color:black;box-shadow:0 0 0 10px #222}
+#b.on{background:#FFD700;box-shadow:0 0 80px #FFD700, 0 0 0 10px #333;color:black}
+p{margin-top:30px;opacity:.5}
 </style>
 </head>
 <body>
+<img id="icon" src="icon.png">
 <button id="b">TAP TO ON</button>
+<p>Flash Light by Ugbomatics</p>
 <script>
-let t=null, o=false;
-b.onclick=async()=>{
-if(!t){let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});t=s.getVideoTracks()[0];}
-o=!o;await t.applyConstraints({advanced:[{torch:o}]});b.textContent=o?"TAP TO OFF":"TAP TO ON";b.className=o?"on":"";
+let t=null,o=false;
+const btn=document.getElementById('b');
+btn.onclick=async()=>{
+ try{
+ if(!t){
+  let s=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+  t=s.getVideoTracks()[0];
+ }
+ o=!o;
+ await t.applyConstraints({advanced:[{torch:o}]});
+ btn.textContent=o?"TAP TO OFF":"TAP TO ON";
+ btn.className=o?"on":"";
+ }catch(e){alert("Flash not supported on this browser, use Chrome");}
 }
 </script>
 </body>
